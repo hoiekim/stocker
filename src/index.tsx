@@ -1,17 +1,30 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import reportWebVitals from "./reportWebVitals";
+import * as components from "./components";
+import { styles } from "./lib";
+
+const { Config, Layout } = components;
+const { Header, GlobalStyle, Button, FlexBox } = styles;
+
+export const App = () => {
+  return (
+    <Layout>
+      <Header>Hello Stock World 🙊</Header>
+      <Config name={"primary"} />
+      <FlexBox>
+        <Button>Start Watching</Button>
+      </FlexBox>
+    </Layout>
+  );
+};
 
 ReactDOM.render(
   <React.StrictMode>
+    <GlobalStyle />
     <App />
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
