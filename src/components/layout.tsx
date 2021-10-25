@@ -1,11 +1,18 @@
+import styled from "styled-components";
 import { types, styles } from "../lib";
 
-const { Fullscreen } = styles;
+const { Fullscreen, FlexBox } = styles;
+
+const DarkenedArea = styled(FlexBox)({
+  flexDirection: "column",
+  backgroundColor: "rgba(0, 0, 0, 0.1)",
+  width: "100%",
+});
 
 const Layout = ({ children }: types.props.HasChildren) => {
   return (
     <Fullscreen>
-      <div>{children}</div>
+      <DarkenedArea>{children}</DarkenedArea>
     </Fullscreen>
   );
 };

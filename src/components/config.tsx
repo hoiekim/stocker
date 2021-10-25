@@ -1,21 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import { styles, ops } from "../lib";
+import { types, styles, ops } from "../lib";
 
-const { Input, Label, Select } = styles;
+const { size, Input, Label, Select } = styles;
 const { useLocalStorage } = ops;
 
-const MarginBox = styled.div({ margin: "1rem 0" });
-const NarrowInput = styled(Input)({ width: "10rem" });
-const LeftLabel = styled(Label)({ width: "15rem" });
-const RightLabel = styled(Label)({ width: "2rem" });
-const NarrowSelect = styled(Select)({ width: "6rem" });
+const MarginBox = styled.div({ margin: "1rem 0", padding: "0 1rem" });
+const Row = styled.div({ margin: "0.5rem 0", textAlign: "center" });
+const WidishInput = styled(Input)({ width: "10rem" });
+const WideLabel = styled(Label)({ ...size.wide });
+const InlineBox = styled.div({
+  display: "inline-flex",
+  width: "16.5rem",
+  justifyContent: "space-between",
+});
 
-interface ConfigProp {
+interface ConfigProp extends types.props.HasRef {
   name: string;
 }
 
-const Config = ({ name }: ConfigProp) => {
+const Config = ({ customRef, name }: ConfigProp) => {
   const units = ["minutes", "hours", "days", "weeks", "months"];
 
   const [fluct, setFluct] = useLocalStorage(name + "_fluct", 0);
@@ -28,63 +32,84 @@ const Config = ({ name }: ConfigProp) => {
   const [limit, setLimit] = useLocalStorage(name + "_limit", 0);
   const [limitUnit, setLimitUnit] = useLocalStorage(
     name + "_limitUnit",
-    units[0]
+    units[units.length - 1]
   );
+
+  useEffect(() => {
+    if (customRef) {
+      customRef.state = {
+        fluct,
+        period,
+        periodUnit,
+        trans,
+        limit,
+        limitUnit,
+      };
+    }
+  }, [customRef, fluct, period, periodUnit, trans, limit, limitUnit]);
 
   const unitOptions = units.map((e, i) => <option key={i}>{e}</option>);
 
   return (
     <MarginBox>
-      <div>
-        <LeftLabel>Target Fluctuation Rate (a)</LeftLabel>
-        <NarrowInput
-          type="number"
-          value={fluct}
-          onChange={(e) => setFluct(+e.target.value)}
-        />
-        <RightLabel>%</RightLabel>
-      </div>
-      <div>
-        <LeftLabel>Watching Period</LeftLabel>
-        <NarrowInput
-          type="number"
-          min={0}
-          value={period}
-          onChange={(e) => setPeriod(+e.target.value)}
-        />
-        <NarrowSelect
-          value={periodUnit}
-          onChange={(e) => setPeriodUnit(e.target.value)}
-        >
-          {unitOptions}
-        </NarrowSelect>
-      </div>
-      <div>
-        <LeftLabel>Transaction Rate (c)</LeftLabel>
-        <NarrowInput
-          type="number"
-          min={0}
-          max={100}
-          value={trans}
-          onChange={(e) => setTrans(+e.target.value)}
-        />
-        <RightLabel>%</RightLabel>
-      </div>
-      <div>
-        <LeftLabel>High Point Detecting Limit (n)</LeftLabel>
-        <NarrowInput
-          type="number"
-          min={0}
-          value={limit}
-          onChange={(e) => setLimit(+e.target.value)}
-        />
-        <NarrowSelect
-          value={limitUnit}
-          onChange={(e) => setLimitUnit(e.target.value)}
-        >
-          {unitOptions}
-        </NarrowSelect>
-      </div>
+      <Row>
+        <WideLabel>Target Fluctuation Rate (a)</WideLabel>
+        <InlineBox>
+          <WidishInput
+            type="number"
+            value={fluct.toString()}
+            onChange={(e) => setFluct(+e.target.value)}
+          />
+          <Label>%</Label>
+        </InlineBox>
+      </Row>
+      <Row>
+        <WideLabel>Watching Period</WideLabel>
+        <InlineBox>
+          <WidishInput
+            type="number"
+            min={0}
+            value={period.toString()}
+            onChange={(e) => setPeriod(+e.target.value)}
+          />
+          <Select
+            value={periodUnit}
+            onChange={(e) => setPeriodUnit(e.target.value)}
+          >
+            {unitOptions}
+          </Select>
+        </InlineBox>
+      </Row>
+      <Row>
+        <WideLabel>Transaction Rate (c)</WideLabel>
+        <InlineBox>
+          <WidishInput
+            type="number"
+            min={0}
+            max={100}
+            value={trans.toString()}
+            onChange={(e) => setTrans(+e.target.value)}
+          />
+          <Label>%</Label>
+        </InlineBox>
+      </Row>
+      <Row>
+        <WideLabel>High Point Detecting Limit (n)</WideLabel>
+        <InlineBox>
+          <WidishInput
+            type="number"
+            min={0}
+            value={limit.toString()}
+            onChange={(e) => setLimit(+e.target.value)}
+          />
+          <Select
+            value={limitUnit}
+            onChange={(e) => setLimitUnit(e.target.value)}
+          >
+            {unitOptions}
+          </Select>
+        </InlineBox>
+      </Row>
     </MarginBox>
   );
 };
