@@ -7,15 +7,15 @@ const { useLocalStorage } = ops;
 
 const MarginBox = styled.div({ margin: "1rem 0", padding: "0 1rem" });
 const Row = styled.div({ margin: "0.5rem 0", textAlign: "center" });
-const WidishInput = styled(Input)({ width: "10rem" });
+const WidishInput = styled(Input)({ width: "8.5rem" });
 const WideLabel = styled(Label)({ ...size.wide });
 const InlineBox = styled.div({
   display: "inline-flex",
-  width: "16.5rem",
+  width: "15rem",
   justifyContent: "space-between",
 });
 
-interface ConfigProp extends types.props.HasRef {
+interface ConfigProp extends types.props.HasCustomRef {
   name: string;
 }
 

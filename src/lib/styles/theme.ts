@@ -13,20 +13,20 @@ export const pressed = {
   border: "none",
   borderRadius: "3px",
   color: colors.white.hex(),
-  backgroundColor: colors.main.lighten(0.3).hex(),
+  backgroundColor: colors.main.hex(),
   boxShadow:
-    "inset 2px 2px 2px rgba(0, 0, 0, 0.5)," +
-    "inset -2px -2px 2px rgba(255, 255, 255, 0.05);",
+    `inset 2px 2px 2px ${colors.main.darken(0.3).hex()},` +
+    `inset -2px -2px 2px ${colors.main.lighten(0.3).hex()}`,
 };
 
 export const extruded = {
   border: "none",
   borderRadius: "3px",
   color: colors.white.hex(),
-  backgroundColor: colors.main.lighten(0.3).hex(),
+  backgroundColor: colors.main.hex(),
   boxShadow:
-    "2px 2px 4px rgba(0, 0, 0, 0.5)," +
-    "-2px -2px 4px rgba(255, 255, 255, 0.05);",
+    `2px 2px 4px ${colors.main.darken(0.3).hex()},` +
+    `-2px -2px 4px ${colors.main.lighten(0.3).hex()}`,
   ":hover": {
     backgroundColor: colors.main.lighten(0.4).hex(),
   },

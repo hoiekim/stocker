@@ -5,6 +5,6 @@ export interface HasChildren {
   children?: ReactNode | ReactNode[];
 }
 
-export interface HasRef {
+export interface HasCustomRef {
   customRef?: types.CustomRef;
 }
